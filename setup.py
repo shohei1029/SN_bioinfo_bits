@@ -10,8 +10,8 @@ setup(
         author           = "S.N.",
         author_email     = "",
         url              = "https://github.com/shohei1029/SN_bioinfo_bits.git",
-        keywords         = ["bioinformatics", "SN"]
+        keywords         = ["bioinformatics", "SN"],
         packages         = find_packages(),
         install_requires = ["numpy", "biopython", "matplotlib", "toml"],
-        extras_require   = ["progressbar2", "PypeR", "neovim", "ipdb", "ete3"],
+        extras_require   = ["neovim", "ipdb", "progressbar2", "PypeR", "ete3"],
         )
