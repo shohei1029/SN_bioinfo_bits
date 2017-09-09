@@ -17,13 +17,13 @@ setup(
             'numpy',
             'biopython',
             'matplotlib', 
-            'toml'
+            'toml',
 
             'pandas',
-            'neovim'
+            'neovim',
             'ipdb',
             'progressbar2',
             'PypeR', 
-            'ete3'
+            'ete3',
             ],
         )
