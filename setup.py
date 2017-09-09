@@ -13,5 +13,5 @@ setup(
         keywords         = ["bioinformatics", "SN"]
         packages         = find_packages(),
         install_requires = ["numpy", "biopython", "matplotlib", "toml"],
-        extras_require   = ["progressbar2", "PypeR", "neovim", "ipdb", "ete3"]
+        extras_require   = ["progressbar2", "PypeR", "neovim", "ipdb", "ete3"],
         )
