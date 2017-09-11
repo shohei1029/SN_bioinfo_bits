@@ -16,11 +16,31 @@ def read_fasta(fasta_text):
     return fa_dict
 
 def read_genbank_dir(dir_path):
+    """
+    input including asterisk,  e.g. "./genomes/*.gbk" 
+    (generator)
+    """
     import glob
     gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
     for gb_f in gb_files:
         gb = SeqIO.parse(gb_f, "genbank")
         yield list(gb)
+
+def genbank2fasta(gb_file):
+#    try:
+    out_txt = ""
+    for seq_record in SeqIO.parse(gb_file, "genbank") :
+#        print(seq_record.id)
+#        print("Dealing with GenBank record {}".format(seq_record.name))
+        out_txt += ">{acc}@{org}\n{seq}\n".format(
+            acc = seq_record.id,
+            org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
+            seq = seq_record.seq)
+        print(out_txt)
+    return out_txt
+#    except AssertionError as err:
+#        num_assersionerr =+ 1
+#        print("AssertionError has been occured: ",err)
 
 def read_tomlfile(toml_file):
     from collections import OrderedDict
