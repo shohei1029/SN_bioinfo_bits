@@ -15,6 +15,13 @@ def read_fasta(fasta_text):
     fa_dict = SeqIO.to_dict(SeqIO.parse(fasta_text, "fasta"))
     return fa_dict
 
+def read_genbank_dir(dir_path):
+    import glob
+    gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
+    for gb_f in gb_files:
+        gb = SeqIO.parse(gb_f, "genbank")
+        yield list(gb)
+
 def read_tomlfile(toml_file):
     from collections import OrderedDict
     import toml
