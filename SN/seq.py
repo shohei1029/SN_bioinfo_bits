@@ -251,6 +251,7 @@ def running_average_masked(obs, ws, min_valid_fraction=0.95):
     obs     --  observations (a masked array)
     ws      --  window size (number of points to average)
 
+    originated from:
     https://github.com/neherlab/HIVEVO_figures/blob/master/src/evolutionary_rates.py
     '''
     #tmp_vals = np.convolve(np.ones(ws, dtype=float), obs*(1-obs.mask), mode='same')
