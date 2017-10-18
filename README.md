@@ -1,1 +1,2 @@
-# SN_bioinfo_bits
+# biwand
+A wand for bioinformatician
