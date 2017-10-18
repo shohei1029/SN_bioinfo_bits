@@ -89,7 +89,7 @@ def seqrcds_to_dict(sequences, key_function=None):  #from BioPython (SeqIO)
         d[key] = record 
     return d 
 
-def seqrcds_to_ordereddict(sequences, key_function=None):  #modified to return as OrderedDict
+def seqrcds_to_ordereddict(sequences, key_function=None, ignore_identical_header=False):  #modified to return as OrderedDict
     from collections import OrderedDict
     if key_function is None: 
           key_function = lambda rec: rec.id 
@@ -98,7 +98,10 @@ def seqrcds_to_ordereddict(sequences, key_function=None):  #modified to return a
     for record in sequences: 
         key = key_function(record) 
         if key in d: 
-            raise ValueError("Duplicate key '%s'" % key) 
+            if ignore_identical_header: #同一ヘッダーがあったときは最初の奴だけを保存する。
+                continue 
+            else:
+                raise ValueError("Duplicate key '%s'" % key) 
         d[key] = record 
     return d 
 
