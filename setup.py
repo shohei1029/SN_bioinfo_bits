@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
         name             = 'biwand',
-        version          = '1.0.0.dev2',
+        version          = '1.0.1.dev',
         description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
 #        license          = __license__,
         author           = 'S.N.',
@@ -12,6 +12,11 @@ setup(
         url              = 'https://github.com/shohei1029/biwand.git',
         keywords         = 'bioinformatics SN',
         packages         = find_packages(),
+        scripts          = [
+            'bin/fasta2mat_nucl.sh',
+            'bin/blast2sim.py',
+            'bin/plot_hist.py',
+            ],
         python_requires  = '>=3',
         install_requires = [
             'numpy',
