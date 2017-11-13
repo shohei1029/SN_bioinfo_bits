@@ -50,18 +50,21 @@ logger.addHandler(handler)
 
 
 
-###################
 # Argument Parser #
-###################
-parser = argparse.ArgumentParser()
-#parser.add_argument("-m","--nomultihit",type=bool,default=True,choices=[True,False],help="If there are NO multiple hits in Blast output file -> True .(分割ヒット対策をしなくていいんだったらTrue, 分割ヒットしててbit scoreの最大値を選んでとってくる必要があるんだったらFalse (Defauls)")
-parser.add_argument("-i","--input_file",type=str,default=None,help="Input Blast output file (tabular).")
-parser.add_argument("-o","--output_file",type=str,help="Output file")
-#parser.add_argument("-k","--edge_num",type=int,default=0,help="Ideal number of edges. Conserve alledges -> 0（エッジ数絞らなくていいなら0を指定")
-parser.add_argument("-w","--cutoff_edge_weight",type=float,default=0.0,help="Cutoff by edge weight (i.e. sim(x,y)).(<=),以下")
-parser.add_argument("-s","--cutoff_identity",type=float,default=0.0,help="Cutoff by BLAST % identity  (>=),指定値以上を残す")
-args = parser.parse_args()
-
+def argparser():
+    parser = argparse.ArgumentParser()
+    #parser.add_argument("-m","--nomultihit",type=bool,default=True,choices=[True,False],help="If there are NO multiple hits in Blast output file -> True .(分割ヒット対策をしなくていいんだったらTrue, 分割ヒットしててbit scoreの最大値を選んでとってくる必要があるんだったらFalse (Defauls)")
+    parser.add_argument("-i", "--input_file", type=str, default=None,
+                        help="Input Blast output file (tabular). There should be no multi-hit in the result (only best HSP).")
+    parser.add_argument("-o", "--output_file", type=str,
+                        help="Output file")
+    #parser.add_argument("-k","--edge_num",type=int,default=0,help="Ideal number of edges. Conserve alledges -> 0（エッジ数絞らなくていいなら0を指定")
+    parser.add_argument("-w", "--cutoff_edge_weight", type=float, default=0.0,
+                        help="Cutoff by edge weight (i.e. sim(x,y)).(<=),以下")
+    parser.add_argument("-s", "--cutoff_identity", type=float, default=0.0,
+                        help="Cutoff by BLAST ％ identity (>=),指定値以上を残す")
+    args = parser.parse_args()
+    return args
 
 
 class BLAST2SimMatrix(object):
@@ -159,6 +162,7 @@ class BLAST2SimMatrix(object):
 
 
 if __name__ == "__main__":
+    args = argparser()
     np.set_printoptions(threshold=np.nan)
     start_time = time.time()
 
