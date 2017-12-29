@@ -23,8 +23,8 @@ def read_genbank_dir(dir_path):
     import glob
     gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
     for gb_f in gb_files:
-        gb = SeqIO.parse(gb_f, "genbank")
-        yield list(gb)
+        gb = SeqIO.parse(gb_f, "genbank") #generator object
+        yield list(gb) #List of GenBank SeqRecords
 
 def genbank2fasta(gb_file, fasta_file):
     with open(fasta_file, 'w') as fa_fh:
@@ -118,6 +118,37 @@ def fetch_genbank_entries_from_acc(gi_list, both_format=False, seqrcd=False):
         return SeqIO.parse(handle, "gb")
     else:
         return handle.read()
+
+def taxid2lineage(taxids=[511145, 203267, 221988]):
+    '''
+    Requires ETE toolkit. If not installed, try "pip install ete3". (http://etetoolkit.org/)
+
+        input: NCBI taxonomy ID e.g. "511145"
+        returns: lineage dict including ['superkingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+            {'superkingdom': 'Bacteria', 'phylum': 'Proteobacteria', 'class': 'Gammaproteobacteria', 
+            'order': 'Enterobacterales', 'family': 'Enterobacteriaceae', 'genus': 'Escherichia', 'species': 'Escherichia coli'}
+
+    If you inputs list of ids, this returns list of lineage dict.
+    Note: "superkingdom" means "domain".
+    '''
+    from ete3 import NCBITaxa
+    ranks = ['superkingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+    ncbi = NCBITaxa()
+    def _taxid2lineage(taxid):
+        #ranks = ['superkingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+        #ncbi = NCBITaxa()
+        lineage = ncbi.get_lineage(taxid)
+        lineage_dict = dict()
+        names = ncbi.get_taxid_translator(lineage)
+        for rank in ranks:
+            for k, v in ncbi.get_rank(lineage).items():
+                if v == rank:
+                    lineage_dict.update({v: names[k]})
+        return lineage_dict
+    if isinstance(taxids, list):
+        return [_taxid2lineage(taxid)) for taxid in taxids]
+    else:
+        return _taxid2lineage(taxids)
 
 def cprint(string, color, highlight=False):
     """
