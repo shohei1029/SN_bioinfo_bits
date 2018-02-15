@@ -28,7 +28,8 @@ def read_genbank_dir(dir_path):
         yield list(gb) #List of GenBank SeqRecords
 
 def genbank2fasta(gb_file, fasta_file):
-    with open(fasta_file, 'w') as fa_fh: for seq_record in SeqIO.parse(gb_file, "genbank") :
+    with open(fasta_file, 'w') as fa_fh: 
+        for seq_record in SeqIO.parse(gb_file, "genbank"):
             fa_fh.write(">{acc}@{org}\n{seq}\n".format(
                 acc = seq_record.id,
                 org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
