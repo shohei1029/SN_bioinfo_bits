@@ -162,7 +162,7 @@ def taxid2lineage(taxids=[511145, 203267, 221988]):
                     lineage_dict.update({v: names[k]})
         return lineage_dict
     if isinstance(taxids, list):
-        return [_taxid2lineage(taxid)) for taxid in taxids]
+        return [_taxid2lineage(taxid) for taxid in taxids]
     else:
         return _taxid2lineage(taxids)
 
