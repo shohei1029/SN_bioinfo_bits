@@ -19,6 +19,7 @@ def read_genbank_dir(dir_path):
     """
     input including asterisk,  e.g. "./genomes/*.gbk" 
     (generator)
+    returns: gen( list of GenBank SeqRecords )
     """
     import glob
     gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
@@ -34,6 +35,21 @@ def genbank2fasta(gb_file, fasta_file):
                 org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
                 seq = seq_record.seq)
             )
+
+def genbankdir2fasta(dir_path, fasta_file):
+    """
+    input including asterisk,  e.g. "./genomes/*.gbk" 
+    """
+    import glob
+    gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
+    with open(fasta_file, 'w') as fa_fh:
+        for gb_f in gb_files:
+            for seq_record in SeqIO.parse(gb_f, "genbank") #generator object
+                fa_fh.write(">{acc}@{org}\n{seq}\n".format(
+                    acc = seq_record.id,
+                    org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
+                    seq = seq_record.seq)
+                )
 
 def read_tomlfile(toml_file):
     from collections import OrderedDict
