@@ -55,7 +55,7 @@ def plot_distplot(x, outfile=args.output_file, b=args.bin, kde=args.kde, xlabel=
         outfile = "./out_plot_hist.png"
 
     fig.savefig(outfile, dpi=300)
-    sns.plt.close()
+#    sns.plt.close()
     print("saved as", outfile)
     
 
