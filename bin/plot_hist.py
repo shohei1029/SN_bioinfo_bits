@@ -16,6 +16,21 @@ import seaborn as sns
 # 2016.5.26
 # x軸の範囲とか，タイトルとか，引数で全部与えられるように。
 
+# ここに置かないと，    
+# def plot_distplot(x, outfile=args.output_file, b=args.bin, kde=args.kde, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
+# NameError: name 'args' is not defined
+# ってエラーが出る.
+parser = argparse.ArgumentParser()
+parser.add_argument("-b","--bin", type=int, help="bin of histgram (int)")
+parser.add_argument("-d","--kde", type=bool, default=False, help="Whether to plot a gaussian kernel density estimate.")
+parser.add_argument("-o","--output_file", type=str)
+parser.add_argument("--xlim", type=str, help="sep=,   ex. 0,1")
+parser.add_argument("--ylim", type=str, help="sep=,   ex. 0,10000")
+parser.add_argument("--xlabel", type=str)
+parser.add_argument("--ylabel", type=str)
+parser.add_argument("--title", type=str)
+args = parser.parse_args()
+
 def plot_distplot(x, outfile=args.output_file, b=args.bin, kde=args.kde, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
 #    sns.set(style="whitegrid"k
     sns.set_style("whitegrid", {'grid.linestyle': '--'})
@@ -45,17 +60,6 @@ def plot_distplot(x, outfile=args.output_file, b=args.bin, kde=args.kde, xlabel=
     
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-b","--bin", type=int, help="bin of histgram (int)")
-    parser.add_argument("-d","--kde", type=bool, default=False, help="Whether to plot a gaussian kernel density estimate.")
-    parser.add_argument("-o","--output_file", type=str)
-    parser.add_argument("--xlim", type=str, help="sep=,   ex. 0,1")
-    parser.add_argument("--ylim", type=str, help="sep=,   ex. 0,10000")
-    parser.add_argument("--xlabel", type=str)
-    parser.add_argument("--ylabel", type=str)
-    parser.add_argument("--title", type=str)
-    args = parser.parse_args()
-
     l = []
     for line in sys.stdin:
         line = line.rstrip()
