@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
     name             = 'biwand',
-    version          = '1.0.2.dev0',
+    version          = '1.0.2.dev1',
     description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
      #license          = __license__,
     author           = 'S.N.',
@@ -14,6 +14,7 @@ setup(
     packages         = find_packages(),
     scripts          = [
         'bin/fasta2mat_nucl.sh',
+        'bin/fasta2mat_prot.sh',
         'bin/blast2sim.py',
         'bin/plot_hist.py',
         ],
