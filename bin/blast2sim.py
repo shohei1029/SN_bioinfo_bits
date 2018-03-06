@@ -74,7 +74,7 @@ class BLAST2SimMatrix(object):
         self.edge_weight_thres = edge_weight_thres
 
     def __repr__(self):
-        #blastファイル，パラメータ，とかの情報も吐き出すように。
+        # blastファイル，パラメータ，とかの情報も吐き出すように。
         if self.entry_set:
             return f"# of Nodes: {len(self.entry_set)}"
 
@@ -94,7 +94,7 @@ class BLAST2SimMatrix(object):
             query   = line.split('\t')[0]
             subject = line.split('\t')[1]
             score   = float(line.split('\t')[11])
-            identity   = float(line.split('\t')[2])
+            identity = float(line.split('\t')[2])
 
             if identity < self.seq_identity_thres:
                 continue
@@ -131,15 +131,15 @@ class BLAST2SimMatrix(object):
                     pass
         
                 dist  = ij if ij >= ji else ji
-                self_  = ii if ii >= jj else jj 
+                self_ = ii if ii >= jj else jj 
         
                 score = 0.0
                 try:
                     score = dist/self_
-                except ZeroDivisionError as err: #ないと信じてるが
+                except ZeroDivisionError as err:  #ないと信じてるが
                     score = dist/1
                     logger.warn("ZeroDivisionError!" + err)
-                    othererr.append(err)
+#                    othererr.append(err)
         
                 self.adj_mat[i][j] = 0.0 if i == j else score #1だと自分自身へのエッジが生まれる
 
@@ -157,10 +157,6 @@ class BLAST2SimMatrix(object):
         out_fh.close()
 
 
-
-
-
-
 if __name__ == "__main__":
     args = argparser()
     np.set_printoptions(threshold=np.nan)
@@ -172,5 +168,5 @@ if __name__ == "__main__":
     main.output_as_sim_adj_list()
 
     logger.debug(main.adj_mat)
-    logger.info("Run time: "+ str((time.time() - start_time)/60) + '[m]')
-    logger.info("= Run time: "+ str((time.time() - start_time)) + '[s]')
+    logger.info("Run time: " + str((time.time() - start_time)/60) + '[m]')
+    logger.info("= Run time: " + str((time.time() - start_time)) + '[s]')
