@@ -111,7 +111,7 @@ class BLAST2SimMatrix(object):
         self.adj_mat = np.zeros((entry_num, entry_num))
         for i, i_id in enumerate(self.entry_list):
             for j, j_id in enumerate(self.entry_list):
-#                ij=0.0; ji=0.0; ii=0.0; jj=0.0;
+                ij=0.0; ji=0.0; ii=0.0; jj=0.0;
 
                 try:
                     ij = self.blast[i_id][j_id]
@@ -132,7 +132,7 @@ class BLAST2SimMatrix(object):
         
                 dist  = ij if ij >= ji else ji
                 self_ = ii if ii >= jj else jj 
-        
+ 
                 score = 0.0
                 try:
                     score = dist/self_
