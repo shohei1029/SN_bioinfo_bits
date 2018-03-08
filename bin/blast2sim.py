@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import re
 import time
 import sys
 from collections import defaultdict
@@ -83,16 +82,16 @@ class BLAST2SimMatrix(object):
         logger.info(f"cut off BLAST-hit by % identity < {self.seq_identity_thres}")
         self.blast = defaultdict(dict)
         self.entry_set = set()
-        p = re.compile('#')
 
         in_fh = open(self.blast_file, 'r') if self.blast_file else sys.stdin 
         for line in in_fh:
-            if p.match(line):
+            if line.startswith('#'):
                 continue
             line = line.rstrip()
 
-            query   = line.split('\t')[0]
-            subject = line.split('\t')[1]
+            # 元は同じfastaのheaderでも，query id: 'gi|106884961|ref|ZP_01352327.1' で subject id: 'gi|106884961|ref|ZP_01352327.1|' みたいなことが起こるので，もう末尾の'|'は消しちゃう.
+            query   = line.split('\t')[0].rstrip('|')
+            subject = line.split('\t')[1].rstrip('|')
             score   = float(line.split('\t')[11])
             identity = float(line.split('\t')[2])
 
@@ -140,10 +139,13 @@ class BLAST2SimMatrix(object):
                     logger.warning(f'''
                     debug:
                       i: {i}, j: {j}
-                      dist: {dist}, self: {self}
+                      dist: {dist}, self_: {self_}
                     ''')
                     score = dist/1
-                    logger.warning("ZeroDivisionError!" + str(err))
+                    logger.warning("ZeroDivisionError! " + str(err))
+                    logger.warning("Query names and subject names may have different forms.")
+                    logger.warning("Critical error occured, quitting..")
+                    quit()
 #                    othererr.append(err)
         
                 self.adj_mat[i][j] = 0.0 if i == j else score #1だと自分自身へのエッジが生まれる
@@ -173,5 +175,5 @@ if __name__ == "__main__":
     main.output_as_sim_adj_list()
 
     logger.debug(main.adj_mat)
-    logger.info("Run time: " + str((time.time() - start_time)/60) + '[m]')
+    logger.info("Run time (blast2sim phase): " + str((time.time() - start_time)/60) + '[m]')
     logger.info("= Run time: " + str((time.time() - start_time)) + '[s]')
