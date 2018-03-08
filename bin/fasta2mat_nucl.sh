@@ -12,10 +12,10 @@ set -euo pipefail
 # 10.19
 # xiangライブラリ内に移行。合わせてblast2sim.pyコマンドがpathに入ってるかの判定でエラー表示を出すように。
 
-EVALUE=1e-5
 #SCRIPT_BLAST_TO_SIM=blast2sim.py
 
 FASTA_FILE=$1
+EVALUE=$2
 
 if [[ ! -f ${FASTA_FILE} ]]; then
     echo "can't find ${FASTA_FILE}, exitting.."
@@ -25,6 +25,10 @@ fi
 if [ ! `which blast2sim.py` ];then
     echo "can't find blast2sim.py in your path, exitting.."
     exit 1
+fi
+
+if [ "$2" = "" ]; then
+    EVALUE=1e-5
 fi
 
 NAME_CORE=`basename ${FASTA_FILE} .fasta`
