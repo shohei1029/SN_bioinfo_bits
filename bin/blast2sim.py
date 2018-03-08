@@ -137,8 +137,13 @@ class BLAST2SimMatrix(object):
                 try:
                     score = dist/self_
                 except ZeroDivisionError as err:  #ないと信じてるが
+                    logger.warning(f'''
+                    debug:
+                      i: {i}, j: {j}
+                      dist: {dist}, self: {self}
+                    ''')
                     score = dist/1
-                    logger.warn("ZeroDivisionError!" + err)
+                    logger.warning("ZeroDivisionError!" + str(err))
 #                    othererr.append(err)
         
                 self.adj_mat[i][j] = 0.0 if i == j else score #1だと自分自身へのエッジが生まれる
