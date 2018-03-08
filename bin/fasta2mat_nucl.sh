@@ -41,7 +41,7 @@ makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype nucl -hash_ind
 BLAST_OUT_FILE_NAME=blastn_bestHSP_${EVALUE}_${NAME_CORE}.txt
 
 echo "BLAST.."
-blastn -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 32 -outfmt 6 -evalue ${EVALUE} -max_target_seqs 99999999 -out ${OUTDIR}/${BLAST_OUT_FILE_NAME}
+blastn -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 32 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore' -evalue ${EVALUE} -max_target_seqs 99999999 -out ${OUTDIR}/${BLAST_OUT_FILE_NAME}
 
 ###################
 # create sim file #
