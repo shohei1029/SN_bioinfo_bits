@@ -33,7 +33,7 @@ if [ "$2" = "" ]; then
 fi
 
 if [ "$3" = "" ]; then
-    SEQIDENT=0.0
+    SEQIDENT=0
 fi
 
 NAME_CORE=`basename ${FASTA_FILE} .fasta`
@@ -61,7 +61,7 @@ blastp -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 
 #grep -v "#" ${OUTDIR}/${BLAST_OUT_FILE_NAME} | LC_ALL=C sort -k 1,2 -u > ${OUTDIR}/mbs_${BLAST_OUT_FILE_NAME}
 
 echo "creating sim files.."
-blast2sim.py -s ${SEQIDENT} -i ${OUTDIR}/${BLAST_OUT_FILE_NAME} > ${OUTDIR}/sim_${BLAST_OUT_FILE_NAME}
+blast2sim.py -s ${SEQIDENT} -i ${OUTDIR}/${BLAST_OUT_FILE_NAME} > ${OUTDIR}/sim_pi${SEQIDENT}_${BLAST_OUT_FILE_NAME}
 
 ###
 jobline "$0 ${NAME_CORE} done"
