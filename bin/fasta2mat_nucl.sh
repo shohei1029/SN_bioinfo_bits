@@ -16,6 +16,7 @@ set -euo pipefail
 
 FASTA_FILE=$1
 EVALUE=$2
+SEQIDENT=$3
 
 if [[ ! -f ${FASTA_FILE} ]]; then
     echo "can't find ${FASTA_FILE}, exitting.."
@@ -31,7 +32,12 @@ if [ "$2" = "" ]; then
     EVALUE=1e-5
 fi
 
+if [ "$3" = "" ]; then
+    SEQIDENT=0.0
+fi
+
 NAME_CORE=`basename ${FASTA_FILE} .fasta`
+NAME_CORE=`basename ${NAME_CORE} .fna`
 OUTDIR=out_${NAME_CORE}
 mkdir -p ${OUTDIR}
 
@@ -55,7 +61,7 @@ blastn -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 
 #grep -v "#" ${OUTDIR}/${BLAST_OUT_FILE_NAME} | LC_ALL=C sort -k 1,2 -u > ${OUTDIR}/mbs_${BLAST_OUT_FILE_NAME}
 
 echo "creating sim files.."
-blast2sim.py -i ${OUTDIR}/${BLAST_OUT_FILE_NAME} > ${OUTDIR}/sim_${BLAST_OUT_FILE_NAME}
+blast2sim.py -s ${SEQIDENT} -i ${OUTDIR}/${BLAST_OUT_FILE_NAME} > ${OUTDIR}/sim_${BLAST_OUT_FILE_NAME}
 
 ###
 jobline "$0 ${NAME_CORE} done"

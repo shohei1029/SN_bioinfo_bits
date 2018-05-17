@@ -6,9 +6,9 @@ from Bio import SeqIO
 
 
 def read_fastafile(fasta_file):
-    with open(fasta_file,'r') as fa_fh:
+    with open(fasta_file, 'r') as fa_fh:
         #fa_dict = SeqIO.to_dict(SeqIO.parse(fa_fh, "fasta"))
-        fa_dict = seqrcds_to_ordereddict(SeqIO.parse(fa_fh, "fasta")) 
+        fa_dict = seqrcds_to_ordereddict(SeqIO.parse(fa_fh, "fasta"))
     return fa_dict
 
 def read_fasta(fasta_text):
@@ -17,7 +17,7 @@ def read_fasta(fasta_text):
 
 def read_genbank_dir(dir_path):
     """
-    input including asterisk,  e.g. "./genomes/*.gbk" 
+    input including asterisk,  e.g. "./genomes/*.gbk"
     (generator)
     returns: gen( list of GenBank SeqRecords )
     """
@@ -28,17 +28,17 @@ def read_genbank_dir(dir_path):
         yield list(gb) #List of GenBank SeqRecords
 
 def genbank2fasta(gb_file, fasta_file):
-    with open(fasta_file, 'w') as fa_fh: 
+    with open(fasta_file, 'w') as fa_fh:
         for seq_record in SeqIO.parse(gb_file, "genbank"):
             fa_fh.write(">{acc}@{org}\n{seq}\n".format(
-                acc = seq_record.id,
-                org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
-                seq = seq_record.seq)
+                acc=seq_record.id,
+                org=seq_record.features[0].qualifiers["organism"][0].replace(" ", "_"),
+                seq=seq_record.seq)
             )
 
 def genbankdir2fasta(dir_path, fasta_file):
     """
-    input including asterisk,  e.g. "./genomes/*.gbk" 
+    input including asterisk,  e.g. "./genomes/*.gbk"
     """
     import glob
     gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
@@ -46,9 +46,9 @@ def genbankdir2fasta(dir_path, fasta_file):
         for gb_f in gb_files:
             for seq_record in SeqIO.parse(gb_f, "genbank"): #generator object
                 fa_fh.write(">{acc}@{org}\n{seq}\n".format(
-                    acc = seq_record.id,
-                    org = seq_record.features[0].qualifiers["organism"][0].replace(" ","_"),
-                    seq = seq_record.seq)
+                    acc=seq_record.id,
+                    org=seq_record.features[0].qualifiers["organism"][0].replace(" ", "_"),
+                    seq=seq_record.seq)
                 )
 
 def read_tomlfile(toml_file):
@@ -68,7 +68,7 @@ def random_sample_fasta(fa_d, n):
 
 def read_fasta_subtype(fasta_text):
     """
-    returns: {subtype: {fasta_header: fasta_seq}} 
+    returns: {subtype: {fasta_header: fasta_seq}}
     """
     from collections import defaultdict
     fasta_d = read_fasta(fasta_text)
@@ -79,31 +79,31 @@ def read_fasta_subtype(fasta_text):
     return subtypes_d
 
 def seqrcds_to_dict(sequences, key_function=None):  #from BioPython (SeqIO)
-    """Turns a sequence iterator or list into a dictionary. 
-    
-        - sequences  - An iterator that returns SeqRecord objects, 
-          or simply a list of SeqRecord objects. 
-        - key_function - Optional callback function which when given a 
-          SeqRecord should return a unique key for the dictionary. 
-    
-    e.g. key_function = lambda rec : rec.name 
-    or,  key_function = lambda rec : rec.description.split()[0] 
-    
-    If key_function is omitted then record.id is used, on the assumption 
-    that the records objects returned are SeqRecords with a unique id. 
-    
-    If there are duplicate keys, an error is raised. 
+    """Turns a sequence iterator or list into a dictionary.
+
+        - sequences  - An iterator that returns SeqRecord objects,
+          or simply a list of SeqRecord objects.
+        - key_function - Optional callback function which when given a
+          SeqRecord should return a unique key for the dictionary.
+
+    e.g. key_function = lambda rec : rec.name
+    or,  key_function = lambda rec : rec.description.split()[0]
+
+    If key_function is omitted then record.id is used, on the assumption
+    that the records objects returned are SeqRecords with a unique id.
+
+    If there are duplicate keys, an error is raised.
     """
-    if key_function is None: 
-          key_function = lambda rec: rec.id 
-    
-    d = dict() 
-    for record in sequences: 
-        key = key_function(record) 
-        if key in d: 
-            raise ValueError("Duplicate key '%s'" % key) 
-        d[key] = record 
-    return d 
+    if key_function is None:
+        key_function = lambda rec: rec.id
+
+    d = dict()
+    for record in sequences:
+        key = key_function(record)
+        if key in d:
+            raise ValueError("Duplicate key '%s'" % key)
+        d[key] = record
+    return d
 
 def seqrcds_to_ordereddict(sequences, key_function=None, ignore_identical_header=False):  #modified to return as OrderedDict
     from collections import OrderedDict
