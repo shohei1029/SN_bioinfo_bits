@@ -12,6 +12,11 @@ set -euo pipefail
 # 10.19
 # xiangライブラリ内に移行。合わせてblast2sim.pyコマンドがpathに入ってるかの判定でエラー表示を出すように。
 
+# 2018.5.21
+# TODO
+# - 引数入れてないと問答無用でエラーが出るのを修正
+# - BLAST結果のファイルがすでにある場合はBLASTを書け直さない。(DB作成済みの場合と，同じE-valueでのBLAST実行済みの場合の2つ)
+
 #SCRIPT_BLAST_TO_SIM=blast2sim.py
 
 FASTA_FILE=$1
