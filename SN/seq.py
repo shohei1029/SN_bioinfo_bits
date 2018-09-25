@@ -39,6 +39,7 @@ def genbank2fasta(gb_file, fasta_file):
 def genbankdir2fasta(dir_path, fasta_file):
     """
     input including asterisk,  e.g. "./genomes/*.gbk"
+    output fasta like >{acc}@{org}\n{seq}
     """
     import glob
     gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
@@ -48,6 +49,29 @@ def genbankdir2fasta(dir_path, fasta_file):
                 fa_fh.write(">{acc}@{org}\n{seq}\n".format(
                     acc=seq_record.id,
                     org=seq_record.features[0].qualifiers["organism"][0].replace(" ", "_"),
+                    seq=seq_record.seq)
+                )
+
+def genbankdir2fasta_taxid(dir_path, fasta_file):
+    """
+    input including asterisk,  e.g. "./genomes/*.gbk"
+    output fasta like >{acc}@{org}@taxon|{taxon}\n{seq}
+    """
+    import glob
+    gb_files = glob.glob(dir_path) #頼むからgenbankファイルしか入れないでくれ..
+    with open(fasta_file, 'w') as fa_fh:
+        for gb_f in gb_files:
+            for seq_record in SeqIO.parse(gb_f, "genbank"): #generator object
+
+                taxid = ""
+                for dbxref in seq_record.features[0].qualifiers["db_xref"]:
+                    if "taxon:" in dbxref:
+                        taxid = dbxref.split(":")[-1] # e.g. taxon|121345 for fasta header
+
+                fa_fh.write(">{acc}@{org}@taxon|{taxon}\n{seq}\n".format(
+                    acc=seq_record.id,
+                    org=seq_record.features[0].qualifiers["organism"][0].replace(" ", "_"),
+                    taxon=taxid,
                     seq=seq_record.seq)
                 )
 

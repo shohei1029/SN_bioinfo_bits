@@ -38,6 +38,7 @@ fi
 
 NAME_CORE=`basename ${FASTA_FILE} .fasta`
 NAME_CORE=`basename ${NAME_CORE} .fna`
+NAME_CORE=`basename ${NAME_CORE} .fa`
 OUTDIR=out_${NAME_CORE}
 mkdir -p ${OUTDIR}
 
