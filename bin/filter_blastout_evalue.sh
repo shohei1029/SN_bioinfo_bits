@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euo pipefail
 
 EVALUE=$1
 
