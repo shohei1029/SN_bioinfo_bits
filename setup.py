@@ -17,6 +17,7 @@ setup(
         'bin/fasta2mat_prot.sh',
         'bin/blast2sim.py',
         'bin/plot_hist.py',
+        'bin/filter_blastout_evalue.sh'
         ],
     python_requires  = '>=3',
     install_requires = [
