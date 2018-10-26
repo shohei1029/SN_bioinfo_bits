@@ -172,7 +172,7 @@ if __name__ == "__main__":
     main = BLAST2SimMatrix(input_file=args.input_file, seq_identity_thres=args.cutoff_identity, edge_weight_thres=args.cutoff_edge_weight)
     main.parse_blast_output()
     main.create_adjacency_matrix()
-    main.output_as_sim_adj_list()
+    main.output_as_sim_adj_list(output_file=args.output_file)
 
     logger.debug(main.adj_mat)
     logger.info("Run time (blast2sim phase): " + str((time.time() - start_time)/60) + '[m]')
