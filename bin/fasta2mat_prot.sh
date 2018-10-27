@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 set -euo pipefail
 
 # for amino acid sequence only
@@ -43,6 +43,7 @@ fi
 
 NAME_CORE=`basename ${FASTA_FILE} .fasta`
 NAME_CORE=`basename ${NAME_CORE} .faa`
+NAME_CORE=`basename ${NAME_CORE} .fa`
 OUTDIR=out_${NAME_CORE}
 mkdir -p ${OUTDIR}
 

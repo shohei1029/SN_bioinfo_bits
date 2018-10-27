@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 set -euo pipefail
 
 # nucleotide only
