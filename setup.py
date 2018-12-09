@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
     name             = 'biwand',
-    version          = '1.0.6.dev0',
+    version          = '1.0.6.dev1',
     description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
      #license          = __license__,
     author           = 'S.N.',
@@ -35,5 +35,6 @@ setup(
         'PypeR',
         'ete3',
         'tabview',
+        'ncbi-genome-download',
         ],
 )
