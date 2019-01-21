@@ -12,6 +12,9 @@ set -euo pipefail
 # 10.19
 # xiangライブラリ内に移行。合わせてblast2sim.pyコマンドがpathに入ってるかの判定でエラー表示を出すように。
 
+# 2019.1.12
+# remove -parse_seqids option in makeblastdb
+
 #SCRIPT_BLAST_TO_SIM=blast2sim.py
 
 FASTA_FILE=$1
@@ -47,7 +50,7 @@ mkdir -p ${OUTDIR}
 # BLAST #
 #########
 echo "making BLAST Database.."
-makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype nucl -hash_index -parse_seqids -max_file_sz 2GB
+makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype nucl -hash_index -max_file_sz 2GB
 
 BLAST_OUT_FILE_NAME=blastn_bestHSP_${EVALUE}_${NAME_CORE}.txt
 
