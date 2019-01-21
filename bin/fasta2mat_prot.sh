@@ -52,7 +52,7 @@ mkdir -p ${OUTDIR}
 # BLAST #
 #########
 echo "making BLAST Database.."
-makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype prot -hash_index -parse_seqids -max_file_sz 2GB
+makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype prot -hash_index -max_file_sz 2GB
 
 BLAST_OUT_FILE_NAME=blastp_bestHSP_${EVALUE}_${NAME_CORE}.txt
 
