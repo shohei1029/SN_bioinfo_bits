@@ -14,6 +14,7 @@ set -euo pipefail
 
 # 2019.1.12
 # remove -parse_seqids option in makeblastdb
+# makeblastdbとblast，すでにファイルが有る場合はスキップするように。
 
 #SCRIPT_BLAST_TO_SIM=blast2sim.py
 
@@ -49,13 +50,21 @@ mkdir -p ${OUTDIR}
 #########
 # BLAST #
 #########
-echo "making BLAST Database.."
-makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype nucl -hash_index -max_file_sz 2GB
+if [[ ! -f ${OUTDIR}/${NAME_CORE}.nhd || ! -f ${OUTDIR}/${NAME_CORE}.00.nhd ]]; then
+    echo "making BLAST Database.."
+    makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype nucl -hash_index -max_file_sz 2GB
+else
+    echo "SKIP, file already exists: making BLAST Database.."
+fi
 
 BLAST_OUT_FILE_NAME=blastn_bestHSP_${EVALUE}_${NAME_CORE}.txt
 
-echo "BLAST.."
-blastn -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 32 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore' -evalue ${EVALUE} -max_target_seqs 99999999 -out ${OUTDIR}/${BLAST_OUT_FILE_NAME}
+if [[ ! -f ${OUTDIR}/${BLAST_OUT_FILE_NAME} ]]; then
+    echo "BLAST.."
+    blastn -query ${FASTA_FILE} -db ${OUTDIR}/${NAME_CORE} -max_hsps 1 -num_threads 32 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore' -evalue ${EVALUE} -max_target_seqs 99999999 -out ${OUTDIR}/${BLAST_OUT_FILE_NAME}
+else
+    echo "SKIP, file already exists: BLAST.."
+fi
 
 ###################
 # create sim file #

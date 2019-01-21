@@ -55,7 +55,7 @@ mkdir -p ${OUTDIR}
 #########
 # BLAST #
 #########
-if [[ ! -f ${OUTDIR}/${NAME_CORE}.phd ]]; then
+if [[ ! -f ${OUTDIR}/${NAME_CORE}.phd || ! -f ${OUTDIR}/${NAME_CORE}.00.phd ]]; then
     echo "making BLAST Database.."
     makeblastdb -in ${FASTA_FILE} -out ${OUTDIR}/${NAME_CORE} -dbtype prot -hash_index -max_file_sz 2GB
 else
