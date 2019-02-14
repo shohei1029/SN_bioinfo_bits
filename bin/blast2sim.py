@@ -138,7 +138,7 @@ class BLAST2SimMatrix(object):
                 except ZeroDivisionError as err:  #ないと信じてるが
                     logger.warning(f'''
                     debug:
-                      i: {i}, j: {j}
+                      i: {i_id}, j: {j_id}
                       dist: {dist}, self_: {self_}
                     ''')
                     score = dist/1
