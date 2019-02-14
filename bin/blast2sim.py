@@ -135,7 +135,7 @@ class BLAST2SimMatrix(object):
                 score = 0.0
                 try:
                     score = dist/self_
-                except ZeroDivisionError as err:  #ないと信じてるが
+                except ZeroDivisionError as err:  #ないと信じてるが.
                     logger.warning(f'''
                     debug:
                       i: {i_id}, j: {j_id}
@@ -144,6 +144,7 @@ class BLAST2SimMatrix(object):
                     score = dist/1
                     logger.warning("ZeroDivisionError! " + str(err))
                     logger.warning("Query names and subject names may have different forms.")
+                    logger.warning("それか自分自身の配列にヒットしてない。前にそういうことあったけどblastやり直したら出てきた。blastのバグでは？？")
                     logger.warning("Critical error occured, quitting..")
                     quit()
 #                    othererr.append(err)
