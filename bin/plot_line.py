@@ -2,6 +2,7 @@
 
 import sys
 import argparse
+import csv
 
 import matplotlib #to set use('Agg') 
 matplotlib.use('Agg') #place this before any other pylab/matplotlib/pyplot import
@@ -23,6 +24,7 @@ import seaborn as sns
 
 # 2019.3.1
 # lineplot へ
+# ひとまずタブ区切りでx axis \t y axia
 
 
 parser = argparse.ArgumentParser()
@@ -34,14 +36,14 @@ parser.add_argument("--ylim", type=str, help="sep=,   ex. 0,10000")
 parser.add_argument("--xlabel", type=str)
 parser.add_argument("--ylabel", type=str)
 parser.add_argument("--title", type=str)
-parser.add_argument('--version', action='version', version='%(prog)s 1.0.1')
+parser.add_argument('--version', action='version', version='%(prog)s 1.0.3')
 args = parser.parse_args()
 
-def plot_lineplot(x, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
+def plot_lineplot(x, y, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
 #    sns.set(style="whitegrid"k
     sns.set_style("whitegrid", {'grid.linestyle': '--'})
     fig, ax = plt.subplots(1, 1, figsize=(8,6)) #fig->figure obj. ax->graph obj. 2,1とかだとgは配列に.2,2だとarray.
-    ax = sns.lineplot(x)
+    ax = sns.lineplot(x, y)
 
     if xlim_str:
         xlim_l = xlim_str.split(",")
@@ -66,9 +68,14 @@ def plot_lineplot(x, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.y
     
 
 if __name__ == '__main__':
-    l = []
-    for line in sys.stdin:
-        line = line.rstrip()
-        l.append(float(line))
+    xs = []
+    ys = []
+    rs = csv.reader(sys.stdin, delimiter='\t')
+    for r in rs:
+        try:
+            xs.append(r[0])
+            ys.append(r[1])
+        except IndexError:
+            pass
 
-    plot_lineplot(l)
+    plot_lineplot(xs, ys)
