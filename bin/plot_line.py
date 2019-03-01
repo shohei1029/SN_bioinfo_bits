@@ -36,7 +36,7 @@ parser.add_argument("--ylim", type=str, help="sep=,   ex. 0,10000")
 parser.add_argument("--xlabel", type=str)
 parser.add_argument("--ylabel", type=str)
 parser.add_argument("--title", type=str)
-parser.add_argument('--version', action='version', version='%(prog)s 1.0.3')
+parser.add_argument('--version', action='version', version='%(prog)s 1.0.4')
 args = parser.parse_args()
 
 def plot_lineplot(x, y, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
@@ -73,8 +73,8 @@ if __name__ == '__main__':
     rs = csv.reader(sys.stdin, delimiter='\t')
     for r in rs:
         try:
-            xs.append(r[0])
-            ys.append(r[1])
+            xs.append(float(r[0]))
+            ys.append(float(r[1]))
         except IndexError:
             pass
 
