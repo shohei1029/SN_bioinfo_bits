@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
     name             = 'biwand',
-    version          = '1.0.6.dev2',
+    version          = '1.0.7.dev',
     description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
      #license          = __license__,
     author           = 'S.N.',
@@ -17,6 +17,7 @@ setup(
         'bin/fasta2mat_prot.sh',
         'bin/blast2sim.py',
         'bin/plot_hist.py',
+        'bin/plot_line.py',
         'bin/filter_blastout_evalue.sh'
         ],
     python_requires  = '>=3',
