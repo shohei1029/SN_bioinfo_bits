@@ -40,7 +40,7 @@ def plot_lineplot(x, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.y
 #    sns.set(style="whitegrid"k
     sns.set_style("whitegrid", {'grid.linestyle': '--'})
     fig, ax = plt.subplots(1, 1, figsize=(8,6)) #fig->figure obj. ax->graph obj. 2,1とかだとgは配列に.2,2だとarray.
-    ax = sns.distplot(x)
+    ax = sns.lineplot(x)
 
     if xlim_str:
         xlim_l = xlim_str.split(",")
