@@ -34,6 +34,7 @@ parser.add_argument("--ylim", type=str, help="sep=,   ex. 0,10000")
 parser.add_argument("--xlabel", type=str)
 parser.add_argument("--ylabel", type=str)
 parser.add_argument("--title", type=str)
+parser.add_argument('--version', action='version', version='%(prog)s 1.0.1')
 args = parser.parse_args()
 
 def plot_lineplot(x, outfile=args.output_file, xlabel=args.xlabel, ylabel=args.ylabel, xlim_str=args.xlim, ylim_str=args.ylim, title=args.title):
