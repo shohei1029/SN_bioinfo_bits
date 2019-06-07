@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
     name             = 'biwand',
-    version          = '1.0.7.dev3',
+    version          = '1.0.8.dev0',
     description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
      #license          = __license__,
     author           = 'S.N.',
@@ -19,6 +19,7 @@ setup(
         'bin/plot_hist.py',
         'bin/plot_line.py',
         'bin/filter_blastout_evalue.sh'
+        'bin/slen'
         ],
     python_requires  = '>=3',
     install_requires = [
