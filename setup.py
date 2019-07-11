@@ -19,7 +19,7 @@ setup(
         'bin/plot_hist.py',
         'bin/plot_line.py',
         'bin/filter_blastout_evalue.sh',
-        'bin/slen'
+        'bin/seqn'
         ],
     python_requires  = '>=3',
     install_requires = [
