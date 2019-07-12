@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+# Created by Shohei Nagata, 2019.7.12
+# ファイルに説明文をつけるツール
+# 解析対象ファイルとかで何がどういうデータなのか分からなくなりがちなので。
+# ひとまずファイルは絶対パスで記録しておく
+
+# read, write, erase でファイル説明を操作する
+# e.g. fm read file_name "comments"
+
+# 説明のファイルはホームディレクトリ直下に作る .fm_db
+# 中身:
+#  file_abs_path \t comments
+# 区切り文字要検討
+
+# できればgo-langに移植したい
+# class化する
+
+import sys
+import pathlib
+
+if __name__ == "__main__":
+    argvs = sys.argv
+    db_fp = pathlib.Path("~/.fm_db").expanduser()
+    open(db_fp, 'a').close()
+
+    target_file = argvs[2]
+    p = pathlib.Path(target_file)
+    p_abs = p.resolve()
+
+    if argvs[1] == "read" or argvs[1] == "r":
+        with open(db_fp, "r") as fh:
+            for line in fh:
+                line = line.rstrip()
+                row = line.split("\t")
+                if row[0] == str(p_abs):
+                    print(row[1])
+
+    elif argvs[1] == "write" or argvs[1] == "w":
+        comments = argvs[3]
+        with open(db_fp, "a") as fh:
+            fh.write(f"{p_abs}\t{comments}\n")
+
+    #ひとまず対象p_absに関わる記述は全部削除する実装で。
+    elif argvs[1] == "erase"  or argvs[1] == "e":
+        with open(db_fp, "r") as fh:
+            data_lines = fh.readlines()
+        with open(db_fp, "w") as fh:
+            for line in data_lines:
+                if not line.split("\t")[0] == str(p_abs):
+                    fh.write(line)
+
