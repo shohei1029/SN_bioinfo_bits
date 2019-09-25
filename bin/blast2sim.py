@@ -167,7 +167,7 @@ class BLAST2SimMatrix(object):
 
 if __name__ == "__main__":
     args = argparser()
-    np.set_printoptions(threshold=np.nan)
+#    np.set_printoptions(threshold=np.nan) #エラーが出るのでコメントアウト
     start_time = time.time()
 
     main = BLAST2SimMatrix(input_file=args.input_file, seq_identity_thres=args.cutoff_identity, edge_weight_thres=args.cutoff_edge_weight)
