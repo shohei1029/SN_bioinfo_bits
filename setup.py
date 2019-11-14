@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
  
 setup(
     name             = 'biwand',
-    version          = '1.0.9.dev2',
+    version          = '1.0.9.dev3',
     description      = 'A wand for bioinformatician. Collection of modules for dealing with biological data in Python, created by S.N.',
      #license          = __license__,
     author           = 'S.N.',

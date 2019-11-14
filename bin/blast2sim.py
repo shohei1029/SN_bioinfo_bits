@@ -144,6 +144,7 @@ class BLAST2SimMatrix(object):
                     score = dist/1
                     logger.warning("ZeroDivisionError! " + str(err))
                     logger.warning("Query names and subject names may have different forms.")
+                    logger.warning("BLASTが勝手に配列IDを変えて出力する場合がある..")
                     logger.warning("それか自分自身の配列にヒットしてない。前にそういうことあったけどblastやり直したら出てきた。blastのバグでは？？")
                     logger.warning("Critical error occured, quitting..")
                     quit()
