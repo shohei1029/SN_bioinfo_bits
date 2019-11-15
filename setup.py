@@ -22,7 +22,7 @@ setup(
         'bin/seqn',
         'bin/fm'
         ],
-    python_requires  = '>=3',
+    python_requires  = '>=3', # f strings can be used after 3.6
     install_requires = [
         'numpy',
         'biopython',
